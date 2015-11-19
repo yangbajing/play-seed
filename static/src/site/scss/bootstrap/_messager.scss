@@ -1,0 +1,49 @@
+
+//== Messager
+//
+//##
+
+//** Messager max width
+$messager-max-width:           600px !default;
+$messager-opacity:             .9 !default;
+$messager-top-base: 0 !default;
+$messager-bottom-base: 0 !default;
+
+.messager {
+  max-width: $messager-max-width;
+  opacity: $messager-opacity;
+  position: fixed;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+  right: 0;
+  left: 0;
+  z-index: 99999;
+
+  &.messager-top {
+    top: $messager-top-base;
+  }
+
+  &.messager-bottom {
+    bottom: $messager-bottom-base;
+  }
+
+  > * {
+    border-radius: 0;
+    &:first-child {
+      border-top-left-radius: $border-radius-base;
+      border-top-right-radius: $border-radius-base;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: $border-radius-base;
+      border-bottom-right-radius: $border-radius-base;
+    }
+
+  }
+
+  .alert {
+    margin-bottom: 0;
+
+  }
+}

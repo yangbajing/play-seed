@@ -1,0 +1,29 @@
+@()
+@foot = {
+    <script src="@routes.Assets.at("js/sign.js")"></script>
+}
+@views.html._layout("登陆", foot = foot) {
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default sign-panel col-sm-12 col-md-offset-8 col-md-4">
+                <form role="form" id="signin-form">
+                    <div class="form-group">
+                        <label class="control-label">邮箱</label>
+                        <input type="text" class="form-control" name="email" placeholder="登录邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">密码</label>
+                        <input type="password" class="form-control" name="password" placeholder="请输入8至32位字条密码">
+                    </div>
+                    <div class="form-group">
+                        <p class="text-info"></p>
+                        <button type="submit" class="btn btn-primary btn-block">登录</button>
+                        <p>
+                            <a class="pull-right" href="@controllers.routes.PageController.signup()">没有账号，请注册</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

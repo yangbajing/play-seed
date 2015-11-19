@@ -1,0 +1,47 @@
+@(title: String,
+        head: Html = Html(""),
+        foot: Html = Html(""),
+        keywords: String = "play,scala,slick,slick-pg,postgresql,akka",
+        description: String = "play seed")(body: Html)
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="renderer" content="webkit"/>
+        <meta http-equiv="Cache-Control" content="no-siteapp"/>
+        <meta name="keywords" content="@keywords">
+        <meta name="description" content="@description"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+        <title>@title</title>
+
+        <link rel="icon" href="@routes.Assets.at("img/favicon.jpg")"/>
+
+            <!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="192x192" href="@routes.Assets.at("img/favicon.jpg")"/>
+
+            <!-- Add to homescreen for Safari on iOS -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+        <meta name="apple-mobile-web-app-title" content="橙信"/>
+        <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("img/favicon.jpg")"/>
+
+            <!-- Tile icon for Win8 (144x144 + tile color) -->
+        <meta name="msapplication-TileImage" content="img/favicon.jpg"/>
+        <meta name="msapplication-TileColor" content="#0e90d2"/>
+
+        <link rel="stylesheet" href="@routes.Assets.at("css/static.css")">
+        <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+        <script src="@routes.Assets.at("js/static.js")"></script>
+        @head
+            <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+    <body>
+        @body
+        @foot
+    </body>
+</html>
