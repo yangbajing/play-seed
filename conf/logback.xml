@@ -55,7 +55,6 @@
     <logger name="application" level="DEBUG"/>
     <logger name="models" level="DEBUG"/>
     <logger name="controllers" level="DEBUG"/>
-    <logger name="Global" level="DEBUG"/>
     <logger name="slick" level="INFO"/>
     <logger name="slick.backend.DatabaseComponent.action" level="DEBUG"/>
     <logger name="com.zaxxer" level="INFO"/>

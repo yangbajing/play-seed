@@ -1,8 +1,10 @@
 import _root_.sbt.Keys._
 import _root_.sbt._
 import com.thoughtworks.sbtApiMappings.ApiMappings
+import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.Play.autoImport._
 import play.sbt.PlayScala
+import play.sbt.routes.RoutesKeys
 
 object Build extends Build {
   final val DependsConfigure = "test->test;compile->compile"
@@ -27,13 +29,13 @@ object Build extends Build {
       description := "play-seed",
       //TwirlKeys.templateImports ++= Seq("me.yangbajing.ps.data.record._", "me.yangbajing.ps.data.domain._"),
       PlayKeys.playDefaultPort := 58082,
+      RoutesKeys.routesGenerator := InjectedRoutesGenerator,
       libraryDependencies ++= (
         __compile(_scala) ++
           __compile(_scalaModules) ++
           __compile(_scalaLogging) ++
           __compile(_slf4j) ++
-          __compile(_logback) ++
-          __test(_scalatestPlay)),
+          __compile(_logback)),
       libraryDependencies ~= {
         _ map {
           case m if m.organization == "com.typesafe.play" =>

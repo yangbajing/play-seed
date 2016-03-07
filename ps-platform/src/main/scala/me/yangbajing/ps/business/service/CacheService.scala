@@ -1,40 +1,30 @@
 package me.yangbajing.ps.business.service
 
-import java.util.concurrent.TimeUnit
+import javax.inject.{Inject, Singleton}
 
-import akka.actor.ActorRefFactory
+import akka.actor.ActorSystem
 import akka.util.Timeout
 import com.redis.RedisClient
-import me.yangbajing.ps.setting.{CacheSetting, Settings}
+import me.yangbajing.ps.setting.Settings
 
 import scala.concurrent.Future
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration._
 
 /**
- * 缓存服务
- * Created by jingyang on 15/7/17.
- */
-object CacheService {
-  @volatile var _service: CacheService = _
+  * 缓存服务
+  * Created by jingyang on 15/7/17.
+  */
+@Singleton
+class CacheService @Inject()(implicit val actorSystem: ActorSystem) {
+  private implicit val timeout = Timeout(10.seconds)
 
-  def init(refFactory: ActorRefFactory): Unit = {
-    _service = new CacheService(Settings.cache)(refFactory)
-  }
+  val client = RedisClient(Settings.cache.host, Settings.cache.port)
 
-  def apply(): CacheService = _service
+  def remove(key: String) = client.del(key)
 
-  implicit val timeout = Timeout(10, TimeUnit.SECONDS)
-}
+  def getString(key: String): Future[Option[String]] = client.get(key)
 
-class CacheService private(cacheSetting: CacheSetting)(implicit refFactory: ActorRefFactory) {
-
-  val client = RedisClient(cacheSetting.host, cacheSetting.port)
-
-  def remove(key: String)(implicit timeout: Timeout) = client.del(key)
-
-  def getString(key: String)(implicit timeout: Timeout): Future[Option[String]] = client.get(key)
-
-  def set(key: String, value: String, duration: Duration)(implicit timeout: Timeout): Future[Boolean] =
+  def set(key: String, value: String, duration: Duration): Future[Boolean] =
     client.setex(key, duration.toSeconds.toInt, value)
 
 }

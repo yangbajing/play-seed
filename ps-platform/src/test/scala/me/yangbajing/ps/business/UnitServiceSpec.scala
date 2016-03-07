@@ -3,6 +3,9 @@ package me.yangbajing.ps.business
 import akka.actor.ActorSystem
 import me.yangbajing.ps.data.UnitDBSpec
 
+import scala.concurrent.Await
+import scala.concurrent.duration._
+
 abstract class UnitServiceSpec extends UnitDBSpec {
   implicit val system = ActorSystem("service-spec")
 
@@ -11,8 +14,14 @@ abstract class UnitServiceSpec extends UnitDBSpec {
   }
 
   override protected def afterAll(): Unit = {
-    system.shutdown()
-    super.afterAll()
+    try {
+      Await.result(system.terminate(), 10.seconds)
+      super.afterAll()
+    } catch {
+      case e: Exception =>
+        e.printStackTrace()
+        System.exit(3)
+    }
   }
 }
 
