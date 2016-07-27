@@ -21,7 +21,7 @@ trait CustomColumnTypes {
 
 }
 
-trait MyDriver
+trait PsSqlDriver
   extends ExPostgresDriver
     with PgDate2Support
     with PgHStoreSupport
@@ -59,4 +59,4 @@ trait MyDriver
 
 }
 
-object MyDriver extends MyDriver
+object PsSqlDriver extends PsSqlDriver

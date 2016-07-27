@@ -4,7 +4,9 @@ import sbt._
 
 object BuildSettings {
 
-  lazy val basicSettings = Seq(
+  val DependsConfigure = "compile->compile;test->test"
+
+  def basicSettings = Seq(
     version := "2.0.0",
     homepage := Some(new URL("https://github.com/yangbajing/play-seed")),
     organization := "me.yangbajing",
@@ -16,11 +18,11 @@ object BuildSettings {
       //"-Ylog-classpath",
       "-feature",
       "-unchecked",
-      "-deprecation",
+      "-deprecation"/*,
       "-explaintypes",
       "-Yno-adapted-args",
       "-Ywarn-dead-code",
-      "-Ywarn-unused"
+      "-Ywarn-unused"*/
     ),
     javacOptions := Seq(
       "-encoding", "utf8",
@@ -28,29 +30,41 @@ object BuildSettings {
       "-Xlint:unchecked",
       "-Xlint:deprecation"
     ),
-    resolvers ++= Seq(
-      "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-      "releases" at "http://oss.sonatype.org/content/repositories/releases",
-      "maven.mirrorid" at "http://mirrors.ibiblio.org/pub/mirrors/maven2/",
-      "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
-      "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots/"),
     libraryDependencies ++= (
-      __provided(_slf4j) ++
-        __provided(_logback) ++
-        __provided(_typesafeConfig) ++
-        __provided(_scalaLogging) ++
-        __provided(_scala) ++
+      __compile(_slf4j) ++
+        __compile(_logback) ++
+        __compile(_typesafeConfig) ++
+        __compile(_scalaLogging) ++
+        __compile(_scala) ++
         __test(_playTest) ++
         __test(_scalatestplusPlay) ++
         __test(_scalatest)),
+    libraryDependencies ~= {
+      _ map {
+        case m if m.organization == "com.typesafe.play" =>
+          m.exclude("org.scala-lang", "scala-library").
+//            exclude("commons-logging", "commons-logging").
+//            exclude("com.google.guava", "guava").
+//            exclude("org.asynchttpclient", "async-http-client").
+//            exclude("com.typesafe.akka", "akka-actor").
+//            exclude("com.typesafe.akka", "akka-slf4j").
+            //            exclude("org.scala-lang", "scala-compiler").
+            //            exclude("org.scala-lang", "scala-reflect").
+            exclude("org.scala-lang.modules", "scala-xml").
+            exclude("org.scala-lang.modules", "scala-parser-combinators").
+            excludeAll()
+        case m => m
+      }
+    },
     sources in(Compile, doc) := Seq.empty,
     publishArtifact in(Compile, packageDoc) := false,
-    offline := true
+    publishArtifact in packageDoc := false,
+    fork := true
   )
 
   lazy val noPublishing = Seq(
-    publish :=(),
-    publishLocal :=()
+    publish := (),
+    publishLocal := ()
   )
 
 }

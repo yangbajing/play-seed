@@ -1,17 +1,18 @@
 package controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
+import play.api.Environment
 import play.api.http.Writeable
 import play.api.mvc.{Action, Controller}
-
-import scala.concurrent.Future
 
 /**
   * 页面
   * Created by jingyang on 15/7/17.
   */
+@Singleton
 class PageController @Inject()(webTools: WebTools,
+                               environment: Environment,
                                userAction: UserAction
                               ) extends Controller with BaseController {
 

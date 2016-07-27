@@ -51,11 +51,11 @@ object Dependencies {
     ("com.typesafe.slick" %% "slick-hikaricp" % slickVersion).exclude("com.zaxxer", "HikariCP-java6")
   )
 
-  val verSlickPg = "0.14.1"
+  val verSlickPg = "0.14.2"
   val _slickPg = Seq(
-    ("com.github.tminglei" %% "slick-pg" % verSlickPg).exclude("com.typesafe.slick", "slick_2.11"),
-    ("com.github.tminglei" %% "slick-pg_date2" % verSlickPg).exclude("com.typesafe.slick", "slick_2.11"),
-    ("com.github.tminglei" %% "slick-pg_play-json" % verSlickPg).exclude("com.typesafe.slick", "slick_2.11").exclude("com.typesafe.play", "play-json_2.11")
+    "com.github.tminglei" %% "slick-pg" % verSlickPg,
+    "com.github.tminglei" %% "slick-pg_date2" % verSlickPg,
+    ("com.github.tminglei" %% "slick-pg_play-json" % verSlickPg).exclude("com.typesafe.play", "play-json_2.11")
   )
 
   val _play = "com.typesafe.play" %% "play" % PlayVersion.current
@@ -84,7 +84,7 @@ object Dependencies {
 
   val _postgresql = "org.postgresql" % "postgresql" % "9.4.1209"
 
-  val _hikariCP = "com.zaxxer" % "HikariCP" % "2.4.7"
+  val _hikariCP = "com.zaxxer" % "HikariCP" % "2.4.6"
 
   val _patchca = "com.github.bingoohuang" % "patchca" % "0.0.1"
 }
