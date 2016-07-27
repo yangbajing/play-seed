@@ -19,7 +19,7 @@ object Build extends Build {
   ///////////////////////////////////////////////////////////////
   // playSeed project
   ///////////////////////////////////////////////////////////////
-  lazy val playSeed = Project("playSeed", file("."))
+  lazy val playSeed = Project("play-seed", file("."))
     .enablePlugins(PlayScala)
     .enablePlugins(ApiMappings)
     .aggregate(psPlatform, psUtil, psData)

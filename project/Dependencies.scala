@@ -1,4 +1,5 @@
 import sbt._
+import play.core.PlayVersion
 
 object Dependencies {
   def __compile(dep: ModuleID): Seq[ModuleID] = __compile(Seq(dep))
@@ -22,20 +23,20 @@ object Dependencies {
   def __container(deps: Seq[ModuleID]): Seq[ModuleID] = deps map (_ % "container")
 
   val _scalaModules = Seq(
-    "org.scala-lang.modules" %% "scala-xml" % "1.0.4",
+    "org.scala-lang.modules" %% "scala-xml" % "1.0.5",
     "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4"
   ).map(_.exclude("org.scala-lang", "scala-library").
     exclude("org.scala-lang", "scala-compiler").
     exclude("org.scala-lang", "scala-reflect"))
 
-  private val verScala = "2.11.7"
+  private val verScala = "2.11.8"
   val _scala = Seq(
     "org.scala-lang" % "scala-library" % verScala,
     "org.scala-lang" % "scala-compiler" % verScala,
     "org.scala-lang" % "scala-reflect" % verScala
   )
 
-  private val verAkka = "2.4.2"
+  private val verAkka = "2.4.8"
   val _akkaActor = "com.typesafe.akka" %% "akka-actor" % verAkka
   val _akkaRemote = "com.typesafe.akka" %% "akka-remote" % verAkka
   val _akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % verAkka
@@ -47,43 +48,43 @@ object Dependencies {
   val slickVersion = "3.1.1"
   val _slick = Seq(
     "com.typesafe.slick" %% "slick" % slickVersion,
-    "com.typesafe.slick" %% "slick-hikaricp" % slickVersion
+    ("com.typesafe.slick" %% "slick-hikaricp" % slickVersion).exclude("com.zaxxer", "HikariCP-java6")
   )
 
-  val verSlickPg = "0.11.3"
+  val verSlickPg = "0.14.2"
   val _slickPg = Seq(
     ("com.github.tminglei" %% "slick-pg" % verSlickPg).exclude("com.typesafe.slick", "slick"),
     ("com.github.tminglei" %% "slick-pg_date2" % verSlickPg).exclude("com.typesafe.slick", "slick"),
     ("com.github.tminglei" %% "slick-pg_play-json" % verSlickPg).exclude("com.typesafe.slick", "slick").exclude("com.typesafe.play", "play-json")
   )
 
-  val verPlay = "2.5.0"
-  val _playJson = "com.typesafe.play" %% "play-json" % verPlay
-  val _play = "com.typesafe.play" %% "play" % verPlay
+  val _playJson = "com.typesafe.play" %% "play-json" % PlayVersion.current
+  val _play = "com.typesafe.play" %% "play" % PlayVersion.current
 
   val _scalatest = Seq(
     "org.scalatest" %% "scalatest" % "2.2.6"
   )
 
-  val _redisClient = "net.debasishg" %% "redisreact" % "0.7"
+  val _redisClient = ("net.debasishg" %% "redisclient" % "3.1").excludeAll(ExclusionRule("com.typesafe.akka"))
 
   val _typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
-  val _scalaLogging = ("com.typesafe.scala-logging" %% "scala-logging" % "3.1.0").exclude("org.scala-lang", "scala-library").exclude("org.scala-lang", "scala-reflect")
+  val _scalaLogging = ("com.typesafe.scala-logging" %% "scala-logging" % "3.4.0").exclude("org.scala-lang", "scala-library").exclude("org.scala-lang", "scala-reflect")
 
   val _slf4j = "org.slf4j" % "slf4j-api" % "1.7.12"
 
   val _logback = "ch.qos.logback" % "logback-classic" % "1.1.3"
 
-  val _bouncycastle = "org.bouncycastle" % "bcprov-jdk15on" % "1.52"
+  val _bouncycastle = "org.bouncycastle" % "bcprov-jdk15on" % "1.54"
 
-  val _commonsLang3 = "org.apache.commons" % "commons-lang3" % "3.3.2"
+  val _commonsLang3 = "org.apache.commons" % "commons-lang3" % "3.4"
 
   val _commonCodecs = "commons-codec" % "commons-codec" % "1.10"
 
-  val _postgresql = "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
+  val _postgresql = "org.postgresql" % "postgresql" % "9.4.1209"
 
-  val _hikariCP = "com.zaxxer" % "HikariCP" % "2.4.3"
+  val _hikariCP = "com.zaxxer" % "HikariCP" % "2.4.7"
 
   val _patchca = "com.github.bingoohuang" % "patchca" % "0.0.1"
 }
+
