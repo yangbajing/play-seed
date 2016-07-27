@@ -1,27 +1,27 @@
 package me.yangbajing.ps.data.repo
 
 import java.time.LocalDateTime
+import javax.inject.Inject
 
-import me.yangbajing.ps.data.MyDriver.api._
-import me.yangbajing.ps.data.record.Schemas._
-import me.yangbajing.ps.data.record.{Credential, User}
+import me.yangbajing.ps.data.record.{Credential, Schemas, User}
 import me.yangbajing.ps.types.OwnerStatus
 import me.yangbajing.ps.util.Utils
-import play.api.libs.json.{JsValue, JsObject}
+import play.api.libs.json.{JsObject, JsValue}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
- * User数据库访问
- * Created by jingyang on 15/7/16.
- */
+  * User数据库访问
+  * Created by jingyang on 15/7/16.
+  */
 object UserRepo {
   type UserInfo = (User, Option[String], Option[String])
-
-  def apply()(implicit ec: ExecutionContext): UserRepo = new UserRepo()
 }
 
-class UserRepo private()(implicit ec: ExecutionContext) {
+class UserRepo @Inject()(schemas: Schemas)(implicit ec: ExecutionContext) {
+
+  import schemas.driver.api._
+  import schemas._
 
   import UserRepo.UserInfo
 
@@ -30,24 +30,24 @@ class UserRepo private()(implicit ec: ExecutionContext) {
       c <- tCredential if c.id === id
       u <- tUser if u.id === c.id
     } yield (u, c.email, c.phone)
-    db.run(q.result).map(_.headOption)
+    run(q.result).map(_.headOption)
   }
 
   def update(id: Long, attrs: JsValue): Future[Int] = {
     val action = tUser.filter(_.id === id).map(_.attrs).update(attrs).transactionally
-    db.run(action)
+    run(action)
   }
 
   def register(email: Option[String], phone: Option[String], pwd: String): Future[UserInfo] = {
     require(email.isDefined || phone.isDefined, "email和phone至少指定一个")
 
     val (salt, password) = Utils.generatePassword(pwd)
-    val c = Credential(None, email, phone, salt, password, OwnerStatus.ACTIVE, LocalDateTime.now())
+    val c = Credential(None, email, phone, salt, password, LocalDateTime.now())
     val u = for {
       cid <- (tCredential returning tCredential.map(_.id)) += c
-      ret <- tUser += User(Some(cid), JsObject(Nil), c.created_at)
-    } yield (User(Some(cid), JsObject(Nil), c.created_at), email, phone)
-    db.run(u.transactionally)
+      ret <- tUser += User(cid, JsObject(Nil), OwnerStatus.ACTIVE, c.created_at)
+    } yield (User(cid, JsObject(Nil), OwnerStatus.ACTIVE, c.created_at), email, phone)
+    run(u.transactionally)
   }
 
   def signinByEmail(email: String, pwd: String) = {
@@ -66,7 +66,7 @@ class UserRepo private()(implicit ec: ExecutionContext) {
       u <- tUser if u.id === c.id
     } yield (u, c)
 
-    db.run(q.result).map {
+    run(q.result).map {
       case (u, c) +: _ =>
         require(java.util.Arrays.equals(Utils.generatePassword(c.salt, pwd), c.password), "密码不匹配")
         Some((u, c.email, c.phone))

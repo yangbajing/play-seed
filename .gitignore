@@ -22,3 +22,5 @@ server.pid
 *.eml
 /dist/
 .cache
+/ps-web/logs/
+/ps-web/public/

@@ -51,19 +51,20 @@ object Dependencies {
     ("com.typesafe.slick" %% "slick-hikaricp" % slickVersion).exclude("com.zaxxer", "HikariCP-java6")
   )
 
-  val verSlickPg = "0.14.2"
+  val verSlickPg = "0.14.1"
   val _slickPg = Seq(
-    ("com.github.tminglei" %% "slick-pg" % verSlickPg).exclude("com.typesafe.slick", "slick"),
-    ("com.github.tminglei" %% "slick-pg_date2" % verSlickPg).exclude("com.typesafe.slick", "slick"),
-    ("com.github.tminglei" %% "slick-pg_play-json" % verSlickPg).exclude("com.typesafe.slick", "slick").exclude("com.typesafe.play", "play-json")
+    ("com.github.tminglei" %% "slick-pg" % verSlickPg).exclude("com.typesafe.slick", "slick_2.11"),
+    ("com.github.tminglei" %% "slick-pg_date2" % verSlickPg).exclude("com.typesafe.slick", "slick_2.11"),
+    ("com.github.tminglei" %% "slick-pg_play-json" % verSlickPg).exclude("com.typesafe.slick", "slick_2.11").exclude("com.typesafe.play", "play-json_2.11")
   )
 
-  val _playJson = "com.typesafe.play" %% "play-json" % PlayVersion.current
   val _play = "com.typesafe.play" %% "play" % PlayVersion.current
+  val _playTest = "com.typesafe.play" %% "play-test" % PlayVersion.current
+  val _scalatestplusPlay = ("org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1").excludeAll(ExclusionRule("com.typesafe.play"))
 
-  val _scalatest = Seq(
-    "org.scalatest" %% "scalatest" % "2.2.6"
-  )
+  val _playSlick = ("com.typesafe.play" %% "play-slick" % "2.0.2").excludeAll(ExclusionRule("com.typesafe.slick"))
+
+  val _scalatest = "org.scalatest" %% "scalatest" % "2.2.6"
 
   val _redisClient = ("net.debasishg" %% "redisclient" % "3.1").excludeAll(ExclusionRule("com.typesafe.akka"))
 

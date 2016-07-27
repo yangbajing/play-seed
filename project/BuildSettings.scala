@@ -5,12 +5,12 @@ import sbt._
 object BuildSettings {
 
   lazy val basicSettings = Seq(
-    version := "0.0.1",
+    version := "2.0.0",
     homepage := Some(new URL("https://github.com/yangbajing/play-seed")),
     organization := "me.yangbajing",
     organizationHomepage := Some(new URL("http://www.yangbajing.me")),
     startYear := Some(2015),
-    scalaVersion := "2.11.7",
+    scalaVersion := "2.11.8",
     scalacOptions := Seq(
       "-encoding", "utf8",
       //"-Ylog-classpath",
@@ -40,6 +40,8 @@ object BuildSettings {
         __provided(_typesafeConfig) ++
         __provided(_scalaLogging) ++
         __provided(_scala) ++
+        __test(_playTest) ++
+        __test(_scalatestplusPlay) ++
         __test(_scalatest)),
     sources in(Compile, doc) := Seq.empty,
     publishArtifact in(Compile, packageDoc) := false,

@@ -1,60 +1,62 @@
 package me.yangbajing.ps.data
 
-import me.yangbajing.ps.types.OwnerStatus
-import me.yangbajing.ps.util.Constants
 import com.github.tminglei.slickpg._
 import com.github.tminglei.slickpg.utils.SimpleArrayUtils
+import me.yangbajing.ps.types.OwnerStatus
 import play.api.libs.json.{JsValue, Json}
 import slick.driver.JdbcDriver
 
 /**
- * Slick JDBC Driver
- * Created by jingyang on 15/7/16.
- */
+  * Slick JDBC Driver
+  * Created by jingyang on 15/7/16.
+  */
 
-trait MyColumnTypes {
+trait CustomColumnTypes {
   this: JdbcDriver =>
 
-  trait MyColumnsAPI {
+  trait CustomColumnsImplicits {
     self: API =>
     implicit val __ownerStatusColumnType = MappedColumnType.base[OwnerStatus.Value, String](_.toString, OwnerStatus.withName)
-
   }
 
 }
 
 trait MyDriver
   extends ExPostgresDriver
-  with PgDate2Support
-  with PgHStoreSupport
-  with PgPlayJsonSupport
-  with PgArraySupport
-  //with PgRangeSupport
-  //with PgSearchSupport
-  //with PgPostGISSupport
-  with MyColumnTypes {
-  override val pgjson = "jsonb"
-  override val api = MyAPI
+    with PgDate2Support
+    with PgHStoreSupport
+    with PgPlayJsonSupport
+    with PgArraySupport
+    //with PgRangeSupport
+    //with PgSearchSupport
+    //with PgPostGISSupport
+    with CustomColumnTypes {
 
   object MyAPI
     extends API
-    with DateTimeImplicits
-    with HStoreImplicits
-    with JsonImplicits
-    with ArrayImplicits
-    //  with RangeImplicits
-    //  with SearchImplicits
-    //  with PostGISImplicits
-    with MyColumnsAPI {
+      with DateTimeImplicits
+      with ArrayImplicits
+      with PlayJsonImplicits
+      with HStoreImplicits
+      with CustomColumnsImplicits {
     implicit val strListTypeMapper = new SimpleArrayJdbcType[String]("text").to(_.toList)
-    implicit val json4sJsonArrayTypeMapper =
-      new AdvancedArrayJdbcType[JsValue](pgjson,
-        (s) => SimpleArrayUtils.fromString[JsValue](Json.parse)(s).orNull,
-        (v) => SimpleArrayUtils.mkString[JsValue](_.toString())(v)
-      ).to(_.toList)
-
+    implicit val playJsonArrayTypeMapper = new AdvancedArrayJdbcType[JsValue](
+      pgjson,
+      (s) => SimpleArrayUtils.fromString[JsValue](Json.parse)(s).orNull,
+      (v) => SimpleArrayUtils.mkString[JsValue](_.toString())(v))
+      .to(_.toList)
   }
+
+  override def pgjson: String = "jsonb"
+
+  override val api = MyAPI
+
+  val plainAPI = new API with Date2DateTimePlainImplicits
+    with SimpleArrayPlainImplicits
+    with PlayJsonPlainImplicits
+    with SimpleHStorePlainImplicits
+    with CustomColumnsImplicits
+
 }
 
-object MyDriver extends MyDriver {
-}
+object MyDriver extends MyDriver

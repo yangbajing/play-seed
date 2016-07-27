@@ -1,6 +1,0 @@
-GET         /assets/*file @controllers.Assets.at(path = "/public", file)
-GET         /account/signin @controllers.PageController.signin()
-GET         /account/signup @controllers.PageController.signup()
-GET         /home @controllers.PageController.homeMain()
-POST        /inapi/user/signup @controllers.inapi.Users.signup()
-POST        /inapi/user/signin @controllers.inapi.Users.signin()

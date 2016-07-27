@@ -20,11 +20,13 @@
 
 定义play监听端口：`PlayKeys.playDefaultPort := 58082`。
 
-修改相关配置后，执行如下命令生成数据库实例：
+修改相关配置后，执行如下命令生成数据库实例并启动服务：
 
 ```
 ./sbt
-[playSeed] $ testOnly me.yangbajing.ps.data.record.SchemasTest
+play-seed-root > ps-data/testOnly me.yangbajing.ps.data.record.SchemasTest
+play-seed-root > project ps-web
+[ps-web] $ ps-web/run
 ```
 
 前端代码使用gulp管理，代码放在`static`目录。编译后的静态文件将保存在`public`
@@ -34,4 +36,4 @@ npm install
 npm run build
 ```
 
-访问：`http://localhost:58082/account/signup`注册账号
+访问：[http://localhost:58082/account/signup](http://localhost:58082/account/signup) 注册账号
