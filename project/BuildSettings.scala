@@ -12,7 +12,7 @@ object BuildSettings {
     organization := "me.yangbajing",
     organizationHomepage := Some(new URL("http://www.yangbajing.me")),
     startYear := Some(2015),
-    scalaVersion := "2.11.8",
+    scalaVersion := "2.11.11",
     scalacOptions := Seq(
       "-encoding", "utf8",
       //"-Ylog-classpath",
