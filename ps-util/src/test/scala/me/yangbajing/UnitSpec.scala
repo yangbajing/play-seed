@@ -2,7 +2,7 @@ package me.yangbajing
 
 import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.time.{Millis, Seconds, Span}
+import org.scalatest.time.{ Millis, Seconds, Span }
 
 trait UnitSpec extends WordSpec with MustMatchers with OptionValues with ScalaFutures {
 

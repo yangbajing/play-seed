@@ -4,8 +4,8 @@ import me.yangbajing.UnitSpec
 import play.api.libs.json.Json
 
 /**
-  * Created by Yang Jing (yangbajing@gmail.com) on 2016-01-04.
-  */
+ * Created by Yang Jing (yangbajing@gmail.com) on 2016-01-04.
+ */
 class CaseClassTest extends UnitSpec {
   "CaseClassTest" should {
     val cc = CaseClass("哈哈")

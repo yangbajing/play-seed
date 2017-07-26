@@ -5,13 +5,13 @@
 - 主页：http://www.yangbajing.me
 - 微博：http://weibo.com/yangbajing
 
-- play 2.5
-- slick 3.1
-- slick-pg 0.14
-- scalatest 2.6
+- play 2.6
+- slick 3.2
+- slick-pg 0.15
+- scalatest 3.0
 - gulp
-- redisreact 3.1
-- postgresql 9.4
+- redisreact 3.4
+- postgresql 9.6
 
 实现了简单的用户认证和`session`控制功能。采用`redis`来保存`session`值。自定义`play action`和`play filter`来判断`session`有效性和重设`session`。`session`使用`cookie`实现。
 

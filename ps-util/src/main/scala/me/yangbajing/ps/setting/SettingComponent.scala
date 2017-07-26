@@ -1,15 +1,15 @@
 package me.yangbajing.ps.setting
 
-import com.typesafe.config.{ConfigFactory, Config}
+import com.typesafe.config.{ ConfigFactory, Config }
 import scala.collection.JavaConverters._
 import scala.util.Try
 
 import javax.inject.Singleton
 
 /**
-  * 配置文件
-  * Created by jingyang on 15/7/16.
-  */
+ * 配置文件
+ * Created by jingyang on 15/7/16.
+ */
 @Singleton
 class SettingComponent {
   val cache = {

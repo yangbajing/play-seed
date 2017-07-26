@@ -1,7 +1,7 @@
 package me.yangbajing.ps.data.implicits
 
 import me.yangbajing.ps.data.record.User
-import play.api.libs.json.{Json, Format}
+import play.api.libs.json.{ Json, Format }
 
 /**
  * play json format

@@ -1,19 +1,18 @@
 package me.yangbajing.ps.business.service
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
 import me.yangbajing.ps.data.domain.RegisterParam
 import me.yangbajing.ps.data.repo.UserRepo
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 /**
-  * 用户服务
-  * Created by jingyang on 15/7/16.
-  */
+ * 用户服务
+ * Created by jingyang on 15/7/16.
+ */
 @Singleton
-class UserService @Inject()(userRepo: UserRepo)
-                           (implicit ec: ExecutionContext) {
+class UserService @Inject() (userRepo: UserRepo)(implicit ec: ExecutionContext) {
 
   def signin(param: RegisterParam): Future[Option[UserRepo.UserInfo]] = {
     if (param.email.isDefined)

@@ -1,26 +1,26 @@
 package utils
 
-import javax.inject.{Inject, Provider}
+import javax.inject.{ Inject, Provider }
 
 import com.typesafe.scalalogging.StrictLogging
 import controllers.WebTools
 import play.api.http.DefaultHttpErrorHandler
 import play.api.libs.json.Json
-import play.api.mvc.{RequestHeader, Result, Results}
+import play.api.mvc.{ RequestHeader, Result, Results }
 import play.api.routing.Router
-import play.api.{Configuration, Environment, OptionalSourceMapper}
+import play.api.{ Configuration, Environment, OptionalSourceMapper }
 
 import scala.concurrent.Future
 
 /**
-  * Created by Yang Jing (yangbajing@gmail.com) on 2016-03-07.
-  */
-class ErrorHandler @Inject()(webTools: WebTools,
-                             env: Environment,
-                             config: Configuration,
-                             sourceMapper: OptionalSourceMapper,
-                             router: Provider[Router]
-                            ) extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with StrictLogging {
+ * Created by Yang Jing (yangbajing@gmail.com) on 2016-03-07.
+ */
+class ErrorHandler @Inject() (
+  webTools: WebTools,
+  env: Environment,
+  config: Configuration,
+  sourceMapper: OptionalSourceMapper,
+  router: Provider[Router]) extends DefaultHttpErrorHandler(env, config, sourceMapper, router) with StrictLogging {
 
   override def onServerError(request: RequestHeader, ex: Throwable): Future[Result] = {
     request.path match {

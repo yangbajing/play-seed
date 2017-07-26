@@ -1,20 +1,21 @@
 package controllers
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
 import play.api.Environment
 import play.api.http.Writeable
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.DefaultActionBuilder
 
 /**
-  * 页面
-  * Created by jingyang on 15/7/17.
-  */
+ * 页面
+ * Created by jingyang on 15/7/17.
+ */
 @Singleton
-class PageController @Inject()(webTools: WebTools,
-                               environment: Environment,
-                               userAction: UserAction
-                              ) extends Controller with BaseController {
+class PageController @Inject() (
+  webTools: WebTools,
+  environment: Environment,
+  userAction: UserAction,
+  action: DefaultActionBuilder) extends BaseController {
 
   def signin = signPage(views.html.account.signin())
 
@@ -24,7 +25,7 @@ class PageController @Inject()(webTools: WebTools,
     Ok(views.html.home.main(request.userToken))
   }
 
-  private def signPage[C](content: C)(implicit writeable: Writeable[C]) = Action { implicit request =>
+  private def signPage[C](content: C)(implicit writeable: Writeable[C]) = action { implicit request =>
     webTools.getUserToken
       .map {
         case Right(_) =>

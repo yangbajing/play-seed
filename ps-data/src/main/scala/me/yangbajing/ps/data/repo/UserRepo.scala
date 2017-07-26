@@ -3,24 +3,24 @@ package me.yangbajing.ps.data.repo
 import java.time.LocalDateTime
 import javax.inject.Inject
 
-import me.yangbajing.ps.data.record.{Credential, Schemas, User}
+import me.yangbajing.ps.data.record.{ Credential, Schemas, User }
 import me.yangbajing.ps.types.OwnerStatus
 import me.yangbajing.ps.util.Utils
-import play.api.libs.json.{JsObject, JsValue}
+import play.api.libs.json.{ JsObject, JsValue }
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 /**
-  * User数据库访问
-  * Created by jingyang on 15/7/16.
-  */
+ * User数据库访问
+ * Created by jingyang on 15/7/16.
+ */
 object UserRepo {
   type UserInfo = (User, Option[String], Option[String])
 }
 
-class UserRepo @Inject()(schemas: Schemas)(implicit ec: ExecutionContext) {
+class UserRepo @Inject() (schemas: Schemas)(implicit ec: ExecutionContext) {
 
-  import schemas.driver.api._
+  import schemas.profile.api._
   import schemas._
 
   import UserRepo.UserInfo

@@ -8,20 +8,20 @@ import controllers.WebTools
 import me.yangbajing.ps.setting.SettingComponent
 import me.yangbajing.ps.util.Constants
 import play.api.http.HttpFilters
-import play.api.mvc.{EssentialFilter, Filter, RequestHeader, Result}
+import play.api.mvc.{ EssentialFilter, Filter, RequestHeader, Result }
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
-class Filters @Inject()(authFilter: FilterAfterForToken) extends HttpFilters {
+class Filters @Inject() (authFilter: FilterAfterForToken) extends HttpFilters {
   override def filters: Seq[EssentialFilter] =
     Seq(authFilter)
 }
 
-class FilterAfterForToken @Inject()(webTools: WebTools,
-                                    settingComponent: SettingComponent,
-                                    implicit val mat: Materializer,
-                                    implicit val ec: ExecutionContext
-                                   ) extends Filter with StrictLogging {
+class FilterAfterForToken @Inject() (
+  webTools: WebTools,
+  settingComponent: SettingComponent,
+  implicit val mat: Materializer,
+  implicit val ec: ExecutionContext) extends Filter with StrictLogging {
   val matchAll = settingComponent.filterAfterToken.matchAll
   val paths = settingComponent.filterAfterToken.paths
   val excludePaths = settingComponent.filterAfterToken.excludePaths

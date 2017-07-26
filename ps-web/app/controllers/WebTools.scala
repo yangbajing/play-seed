@@ -1,35 +1,36 @@
 package controllers
 
 import java.util.concurrent.TimeUnit
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
 import me.yangbajing.ps.business.service.CacheService
 import me.yangbajing.ps.data.domain.OwnerToken
 import me.yangbajing.ps.util.Constants
 import org.apache.commons.codec.digest.DigestUtils
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.mvc.{Cookie, DiscardingCookie, RequestHeader}
+import play.api.mvc.{ Cookie, DiscardingCookie, RequestHeader }
 
-import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.util.Random
 
 /**
-  * cache放到redis里。
-  */
+ * cache放到redis里。
+ */
 @Singleton
-class WebTools @Inject()(cacheService: CacheService) {
+class WebTools @Inject() (cacheService: CacheService) {
+
   /**
-    *
-    * @param request
-    * @return
-    * case Some(_) =>
-    * future map {
-    * case Right(_) => 成功获取到OwnerToken
-    * case Left(key) => key无效
-    * }
-    * case None => token key's value 未找到
-    */
+   *
+   * @param request
+   * @return
+   * <pre>
+   * case Some(_) =>
+   *   future map {
+   *     case Right(_) => 成功获取到OwnerToken
+   *     case Left(key) => key无效
+   *   }
+   * case None => token key's value 未找到
+   * </pre>
+   */
   def getUserToken(implicit request: RequestHeader): Option[Either[String, OwnerToken]] = {
     val str = request.cookies.find(_.name == Constants.PS_TOKEN_OWNER).map(_.value) orElse
       request.headers.get(Constants.PS_TOKEN_OWNER) orElse

@@ -2,22 +2,22 @@ package me.yangbajing.ps.data.record
 
 import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
-import me.yangbajing.ps.data.PsSqlDriver
+import me.yangbajing.ps.data.PsSqlProfile
 import me.yangbajing.ps.types.OwnerStatus.OwnerStatus
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json.JsValue
 
 import scala.concurrent.Await
-import scala.concurrent.duration.{Duration, FiniteDuration}
+import scala.concurrent.duration.{ Duration, FiniteDuration }
 
 @Singleton
-class Schemas @Inject()(databaseConfigProvider: DatabaseConfigProvider) /* extends DatabaseModule*/ {
-  val databaseConfig = databaseConfigProvider.get[PsSqlDriver]
-  val driver: PsSqlDriver = databaseConfig.driver
+class Schemas @Inject() (databaseConfigProvider: DatabaseConfigProvider) /* extends DatabaseModule*/ {
+  val databaseConfig = databaseConfigProvider.get[PsSqlProfile]
+  val profile: PsSqlProfile = databaseConfig.profile
 
-  import driver.api._
+  import profile.api._
 
   def exec[R](action: DBIOAction[R, NoStream, Nothing])(implicit duration: FiniteDuration = Duration(10, TimeUnit.SECONDS)) = {
     Await.result(databaseConfig.db.run(action), duration)
