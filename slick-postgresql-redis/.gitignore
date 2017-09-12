@@ -1,0 +1,26 @@
+.DS_Store
+.idea/
+.travis.yml
+
+node_modules/
+
+# Ignore Play! working directory #
+bin/
+/db
+/public/
+.eclipse
+/lib/
+/logs/
+/modules
+/project/project
+/project/target
+target/
+tmp/
+test-result
+server.pid
+*.iml
+*.eml
+/dist/
+.cache
+/ps-web/logs/
+/ps-web/public/
